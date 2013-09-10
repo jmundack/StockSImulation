@@ -6,11 +6,17 @@ Write a program using C++ to do the following
 Continuously compute P/E
 
 Symbols and their initial values
+
 Symbol Price   Earnings
+
 ABC    8.54    .240000
+
 BCA    13.21   .320000
+
 CAB    23.51   1.810000
+
 CBA    23.66   1.340000
+
 BAC    24.05   2.060000
 
 Write several routines that do the following
