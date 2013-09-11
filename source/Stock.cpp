@@ -2,6 +2,7 @@
 #include <iomanip>
 
 using namespace std;
+using namespace StockSimulator;
 
 Stock::Stock(const StockData &data, DataChanged &dataChanged):
    _Name(data.GetName()),
@@ -41,9 +42,9 @@ void Stock::StopSimulation()
 
 ostream &operator<<(ostream &os, const Stock &data)
 {
-   os << setw(10);
-   os << data.GetName() << "\t" << data.GetPrice() << "\t";
-   os << data.GetEarnings() << "\t" << data.GetPrice() / data.GetEarnings() << endl;
-   os.clear();
+   os << data.GetName() << setprecision(4) << fixed << setw(10)
+      << data.GetPrice() << setw(10) 
+      << data.GetEarnings() << setw(10)
+      << data.GetPrice() / data.GetEarnings() << endl;
    return os;
 }

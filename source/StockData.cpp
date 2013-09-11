@@ -1,6 +1,7 @@
 #include "StockData.h"
 
 using namespace std;
+using namespace StockSimulator;
 
 StockData::StockData():
    _Price(0),

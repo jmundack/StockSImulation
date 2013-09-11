@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 
+namespace StockSimulator {
+
 class StockData
 {
 public:
@@ -31,5 +33,6 @@ private:
    const float _EarningsVariationPercentage;
    const size_t _EarningsVariationInterval;
 };
+};
 
-std::ostream &operator<<(std::ostream &os, const StockData &data);
+std::ostream &operator<<(std::ostream &os, const StockSimulator::StockData &data);

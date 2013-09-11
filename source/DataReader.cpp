@@ -3,12 +3,14 @@
 #include <iostream>
 
 using namespace std;
+using namespace StockSimulator;
+
 namespace 
 {
    const float _PriceVariationPercentage(80);
    const size_t _PriceVariationInterval(1);
    const float _EarningsVariationPercentage(20);
-   const size_t _EarningsVariationInterval(10);
+   const size_t _EarningsVariationInterval(60);
 };
 
 DataReader::DataReader(const string &filename)
@@ -25,19 +27,20 @@ DataReader::DataReader(const string &filename)
          {
             _Data.push_back(StockData(name,price, earnings, _PriceVariationPercentage, _PriceVariationInterval, _EarningsVariationPercentage, _EarningsVariationInterval));
          }
-#if 0
-         else
+         else if(!name.empty())
          {
-            cerr << "Expected input file of format <name> <price> <price variation in %>";
-            cerr << " <price variation interval> <earnings variation in percentage> <earnings variation interval>" << endl;
+            cerr << "Expected input file of format <name> <price> <earnings>" << endl;
+            cerr << "Invalid data for : " << name << endl;
+            _Data.clear();
             break;
          }
-#endif
       }while(inFile.good() && !inFile.eof());
    }
    else
    {
       cerr << "Failed to open file : " << filename << endl;
    }
+   if (_Data.empty())
+      cout << "No stocks are being simulated" << endl;
 }
 

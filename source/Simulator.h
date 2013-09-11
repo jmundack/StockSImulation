@@ -3,6 +3,8 @@
 #include <thread>
 #include <condition_variable>
 
+namespace StockSimulator {
+
 class Simulator
 {
 public:
@@ -29,4 +31,5 @@ private:
    DataChanged _DataChanged;
    mutable std::mutex _Lock;
    std::condition_variable _ConditionVariable;
+};
 };

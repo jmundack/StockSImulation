@@ -4,11 +4,7 @@
 #include <iostream>
 
 using namespace std;
-#ifdef DEBUG
-const bool _Debug(true);
-#else
-const bool _Debug(false);
-#endif
+using namespace StockSimulator;
 
 Simulator::Simulator(const float initialVal,
                      const size_t percentageVariation,
@@ -53,7 +49,6 @@ void Simulator::_UpdateValue()
    change -= (_MaxVariationInPercentage * 100);
    const float valueChange = _CurrentValue * (change/10000);
    _CurrentValue += valueChange;
-   if (_Debug) cout << "Current Value : " << _CurrentValue << " value changed = " << valueChange << "(" << change/10000 << "%)" << endl;
 }
 
 

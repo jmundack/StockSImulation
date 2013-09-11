@@ -3,6 +3,8 @@
 #include "StockData.h"
 #include <vector>
 
+namespace StockSimulator {
+
 class DataReader
 {
 public:
@@ -10,4 +12,5 @@ public:
    const std::vector<StockData> &GetStockData() const { return _Data;}
 private:
    std::vector<StockData> _Data;
+};
 };

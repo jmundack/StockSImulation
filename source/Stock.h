@@ -3,6 +3,7 @@
 #include "Simulator.h"
 #include "StockData.h"
 
+namespace StockSimulator {
 class Stock
 {
 public:
@@ -19,5 +20,6 @@ private:
    Simulator _PriceSimulator;
    Simulator _EarningsSimulator;
 };
+};
 
-std::ostream &operator<<(std::ostream &os, const Stock &data);
+std::ostream &operator<<(std::ostream &os, const StockSimulator::Stock &data);
