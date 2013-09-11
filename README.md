@@ -27,5 +27,13 @@ The last will read in both feeds and each time a security’s price or earnings 
 -- Earnings
 -- P/E
 
-he original prices and earnings should be an input file so that we can make changes for testing without rebuilding the binary.
+The original prices and earnings should be an input file so that we can make changes for testing without rebuilding the binary.
 Please use C++, no third party software to reduce dependencies.
+
+Build
+-------
+Run ./build/bootstrap.sh to build
+
+Example
+--------
+./build/debug/bin/StockSimulator <input file>
