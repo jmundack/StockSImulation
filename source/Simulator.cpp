@@ -40,19 +40,31 @@ void Simulator::Stop()
    }
 }
 
+float Simulator::GetCurrentValue() const
+{
+   lock_guard<mutex> lk(_Lock);
+   return _CurrentValue;
+}
+
+void Simulator::_UpdateValue()
+{
+   lock_guard<mutex> lk(_Lock);
+   float change = rand() % (2 * _MaxVariationInPercentage * 100);
+   change -= (_MaxVariationInPercentage * 100);
+   const float valueChange = _CurrentValue * (change/10000);
+   _CurrentValue += valueChange;
+   if (_Debug) cout << "Current Value : " << _CurrentValue << " value changed = " << valueChange << "(" << change/10000 << "%)" << endl;
+}
+
+
 void Simulator::_ThreadRoutine()
 {
    while(_IsRunning)
    {
-      unique_lock<mutex> lk(_Lock);
-      float change = rand() % (2 * _MaxVariationInPercentage * 100);
-      change -= (_MaxVariationInPercentage * 100);
-      const float valueChange = _CurrentValue * (change/10000);
-      _CurrentValue += valueChange;
-      if (_Debug) cout << "Current Value : " << _CurrentValue << " value changed = " << valueChange << "(" << change/10000 << "%)" << endl;
+      _UpdateValue();
       if (_DataChanged)
          _DataChanged();
-
-      _ConditionVariable.wait_for(lk, chrono::seconds(_UpdateInterval),  []() {return false;});
+      unique_lock<mutex> lk(_Lock);
+      _ConditionVariable.wait_for(lk, chrono::seconds(_UpdateInterval),  bind(&Simulator::_IsNotRunning, this));
    }
 }

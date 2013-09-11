@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <unistd.h>
+#include <stdio.h>
 #include "Stock.h"
 #include "DataReader.h"
 
@@ -10,6 +11,7 @@ void _UpdateDiaplay(const vector<shared_ptr<Stock> > &stocks)
 {
    for (size_t i = 0; i < stocks.size(); i++)
       cout << *stocks.at(i);
+   cout << flush;
 }
 
 int main ( int argc, char *argv[] )
@@ -20,6 +22,8 @@ int main ( int argc, char *argv[] )
       cerr << "Usage : " << argv[0] << " <input file>" << endl;
       return 1;
    }
+   cout << "Press entr to start.... enter 'q' or 'Q' to stop" << endl;
+   cin.ignore();
    DataReader inputFileReader(argv[1]);
    const vector<StockData> &stockData(inputFileReader.GetStockData());
    for (size_t i = 0; i < stockData.size(); i++)
