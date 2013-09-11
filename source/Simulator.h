@@ -1,13 +1,16 @@
 #pragma once
 #include <functional>
 #include <thread>
+#include <condition_variable>
 
 class Simulator
 {
 public:
+   typedef std::function<void()> DataChanged;
    Simulator(const float initialVal,
              const size_t percentageVariation,
-             const size_t updateInterval);
+             const size_t updateInterval,
+             DataChanged dataChanged);
 
    void Start();
    void Stop();
@@ -21,4 +24,7 @@ private:
    float _CurrentValue;
    std::auto_ptr<std::thread> _Thread;
    bool _IsRunning;
+   DataChanged _DataChanged;
+   std::mutex _Lock;
+   std::condition_variable _ConditionVariable;
 };

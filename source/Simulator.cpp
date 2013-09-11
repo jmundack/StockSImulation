@@ -4,15 +4,22 @@
 #include <iostream>
 
 using namespace std;
+#ifdef DEBUG
+const bool _Debug(true);
+#else
+const bool _Debug(false);
+#endif
 
 Simulator::Simulator(const float initialVal,
                      const size_t percentageVariation,
-                     const size_t updateInterval):
+                     const size_t updateInterval,
+                     DataChanged dataChanged):
    _InitialValue(initialVal),
    _MaxVariationInPercentage(percentageVariation),
    _UpdateInterval(updateInterval),
    _CurrentValue(initialVal),
-   _IsRunning(false)
+   _IsRunning(false),
+   _DataChanged(dataChanged)
 {
 }
 
@@ -25,6 +32,7 @@ void Simulator::Start()
 void Simulator::Stop()
 {
    _IsRunning = false;
+   _ConditionVariable.notify_all();
    if (_Thread.get() != NULL)
    {
       _Thread->join();
@@ -36,11 +44,15 @@ void Simulator::_ThreadRoutine()
 {
    while(_IsRunning)
    {
+      unique_lock<mutex> lk(_Lock);
       float change = rand() % (2 * _MaxVariationInPercentage * 100);
       change -= (_MaxVariationInPercentage * 100);
       const float valueChange = _CurrentValue * (change/10000);
       _CurrentValue += valueChange;
-      cout << "Current Value : " << _CurrentValue << " value changed = " << valueChange << "(" << change/10000 << "%)" << endl;
-      sleep(_UpdateInterval);
+      if (_Debug) cout << "Current Value : " << _CurrentValue << " value changed = " << valueChange << "(" << change/10000 << "%)" << endl;
+      if (_DataChanged)
+         _DataChanged();
+
+      _ConditionVariable.wait_for(lk, chrono::seconds(_UpdateInterval),  []() {return false;});
    }
 }
