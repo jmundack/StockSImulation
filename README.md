@@ -36,4 +36,4 @@ Run ./build/bootstrap.sh to build
 
 Example
 --------
-./build/debug/bin/StockSimulator <input file>
+./build/debug/bin/StockSimulator input_file
