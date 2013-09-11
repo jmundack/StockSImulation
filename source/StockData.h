@@ -5,6 +5,9 @@
 
 namespace StockSimulator {
 
+/**
+ * \brief Class represents raw stock data with getters and settrs
+ */
 class StockData
 {
 public:
@@ -35,4 +38,7 @@ private:
 };
 };
 
+/**
+ * \brief Helper function to print raw stock data
+ */
 std::ostream &operator<<(std::ostream &os, const StockSimulator::StockData &data);

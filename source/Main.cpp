@@ -10,6 +10,7 @@
 
 using namespace std;
 using namespace StockSimulator;
+
 int main ( int argc, char *argv[] )
 {
    if (argc != 2)
@@ -24,9 +25,7 @@ int main ( int argc, char *argv[] )
    DataReader inputFileReader(argv[1]);
    const vector<StockData> &stockData(inputFileReader.GetStockData());
    for (size_t i = 0; i < stockData.size(); i++)
-   {
       cout << stockData.at(i);
-   }
 
    vector<shared_ptr<Stock> > stocks;
    StockScreen screen;
