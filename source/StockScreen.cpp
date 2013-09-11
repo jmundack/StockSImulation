@@ -8,8 +8,13 @@ using namespace StockSimulator;
 
 void StockScreen::AddStock(shared_ptr<Stock> stock)
 {
-   lock_guard<mutex> lk(_DisplayLock);
-   _Stocks.push_back(stock);
+   if (stock.get() == NULL)
+      cerr << "Ignoring invalid stock" << endl;
+   else
+   {
+      lock_guard<mutex> lk(_DisplayLock);
+      _Stocks.push_back(stock);
+   }
 }
 
 void StockScreen::UpdateDisplay() const
